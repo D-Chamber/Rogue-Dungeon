@@ -1,0 +1,15 @@
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/StarterGame
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/StarterGame.deps.json
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/StarterGame.runtimeconfig.json
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/StarterGame.dll
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/ref/StarterGame.dll
+/Users/chamber/Documents/Object Oriented Design/StarterGame/bin/Debug/net6.0/StarterGame.pdb
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.csproj.AssemblyReference.cache
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.GeneratedMSBuildEditorConfig.editorconfig
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.AssemblyInfoInputs.cache
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.AssemblyInfo.cs
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.csproj.CoreCompileInputs.cache
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.dll
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/ref/StarterGame.dll
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.pdb
+/Users/chamber/Documents/Object Oriented Design/StarterGame/obj/Debug/net6.0/StarterGame.genruntimeconfig.cache
