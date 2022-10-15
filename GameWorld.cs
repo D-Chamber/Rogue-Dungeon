@@ -4,48 +4,74 @@ namespace StarterGame
 {
      public class GameWorld
      {
-          public Room CreateWorld()
-        {
-            Room outside = new Room("outside the main entrance of the university");
-            Room scctparking = new Room("in the parking lot at SCCT");
-            Room boulevard = new Room("on the boulevard");
-            Room universityParking = new Room("in the parking lot at University Hall");
-            Room parkingDeck = new Room("in the parking deck");
-            Room scct = new Room("in the SCCT building");
-            Room theGreen = new Room("in the green in from of Schuster Center");
-            Room universityHall = new Room("in University Hall");
-            Room schuster = new Room("in the Schuster Center");
+          private static GameWorld _instance = null;
+          public static GameWorld Instance
+          { 
+               get 
+               { 
+                    if (_instance == null) 
+                    {
+                         _instance = new GameWorld();
+                    }
+                    return _instance;
+               }
+          }
 
-            outside.SetExit("west", boulevard);
+          private Room _entrance;
+          public Room Entrance { get { return _entrance; } }
 
-            boulevard.SetExit("east", outside);
-            boulevard.SetExit("south", scctparking);
-            boulevard.SetExit("west", theGreen);
-            boulevard.SetExit("north", universityParking);
+          private Room _exit;
+          public Room Exit { get { return Exit; } }
 
-            scctparking.SetExit("west", scct);
-            scctparking.SetExit("north", boulevard);
+          private GameWorld()
+          {
+              CreateWorld();
+          }
 
-            scct.SetExit("east", scctparking);
-            scct.SetExit("north", schuster);
+          private void CreateWorld()
+          {
+               Room outside = new Room("outside the main entrance of the university");
+               Room scctparking = new Room("in the parking lot at SCCT");
+               Room boulevard = new Room("on the boulevard");
+               Room universityParking = new Room("in the parking lot at University Hall");
+               Room parkingDeck = new Room("in the parking deck");
+               Room scct = new Room("in the SCCT building");
+               Room theGreen = new Room("in the green in from of Schuster Center");
+               Room universityHall = new Room("in University Hall");
+               Room schuster = new Room("in the Schuster Center");
 
-            schuster.SetExit("south", scct);
-            schuster.SetExit("north", universityHall);
-            schuster.SetExit("east", theGreen);
+               outside.SetExit("west", boulevard);
 
-            theGreen.SetExit("west", schuster);
-            theGreen.SetExit("east", boulevard);
+               boulevard.SetExit("east", outside);
+               boulevard.SetExit("south", scctparking);
+               boulevard.SetExit("west", theGreen);
+               boulevard.SetExit("north", universityParking);
 
-            universityHall.SetExit("south", schuster);
-            universityHall.SetExit("east", universityParking);
+               scctparking.SetExit("west", scct);
+               scctparking.SetExit("north", boulevard);
 
-            universityParking.SetExit("south", boulevard);
-            universityParking.SetExit("west", universityHall);
-            universityParking.SetExit("north", parkingDeck);
+               scct.SetExit("east", scctparking);
+               scct.SetExit("north", schuster);
 
-            parkingDeck.SetExit("south", universityParking);
+               schuster.SetExit("south", scct);
+               schuster.SetExit("north", universityHall);
+               schuster.SetExit("east", theGreen);
 
-            return outside;
-        }
+               theGreen.SetExit("west", schuster);
+               theGreen.SetExit("east", boulevard);
+
+               universityHall.SetExit("south", schuster);
+               universityHall.SetExit("east", universityParking);
+
+               universityParking.SetExit("south", boulevard);
+               universityParking.SetExit("west", universityHall);
+               universityParking.SetExit("north", parkingDeck);
+
+               parkingDeck.SetExit("south", universityParking);
+
+               // assign special rooms
+               _entrance = outside;
+               _exit = universityHall;
+          }
      }
 }

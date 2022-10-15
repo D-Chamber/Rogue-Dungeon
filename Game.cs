@@ -6,7 +6,7 @@ namespace StarterGame
 {
     public class Game
     {
-        GameWorld gw = new GameWorld();
+        // GameWorld gw = new GameWorld();
         private Player _player;
         private Parser _parser;
         private bool _playing;
@@ -15,7 +15,7 @@ namespace StarterGame
         {
             _playing = false;
             _parser = new Parser(new CommandWords());
-            _player = new Player(gw.CreateWorld());
+            _player = new Player(GameWorld.Instance.Entrance);
         }
 
         /**
