@@ -26,6 +26,26 @@ namespace StarterGame
           private GameWorld()
           {
               CreateWorld();
+              NotificationCenter.Instance.AddObserver("PlayerDidEnterRoom", PlayerDidEnterRoom);
+              NotificationCenter.Instance.AddObserver("PlayerWillEnterRoom", PlayerWillEnterRoom);
+          }
+
+          public void PlayerDidEnterRoom(Notification notification) 
+          {
+               Player player = (Player)notification.Object;
+               if (player != null)
+               {
+                  player.OutputMessage($"The player is {player.CurrentRoom.Tag}.");
+               }
+          }
+
+          public void PlayerWillEnterRoom(Notification notification)
+          {
+               Player player = (Player)notification.Object;
+               if (player != null)
+               {
+                    player.OutputMessage($"The player is about to leave {player.CurrentRoom.Tag}");
+               }
           }
 
           private void CreateWorld()
