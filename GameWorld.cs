@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace StarterGame
 {
@@ -21,13 +23,19 @@ namespace StarterGame
           public Room Entrance { get { return _entrance; } }
 
           private Room _exit;
-          public Room Exit { get { return Exit; } }
+          public Room Exit { get { return _exit; } }
+
+          private int counter;
+
+          private Dictionary<Room, WorldMod> worldMods = new Dictionary<Room, WorldMod>();
+          // private WorldMod worldMod;
 
           private GameWorld()
           {
               CreateWorld();
               NotificationCenter.Instance.AddObserver("PlayerDidEnterRoom", PlayerDidEnterRoom);
               NotificationCenter.Instance.AddObserver("PlayerWillEnterRoom", PlayerWillEnterRoom);
+              counter = 0;
           }
 
           public void PlayerDidEnterRoom(Notification notification) 
@@ -35,7 +43,27 @@ namespace StarterGame
                Player player = (Player)notification.Object;
                if (player != null)
                {
-                  player.OutputMessage($"The player is {player.CurrentRoom.Tag}.");
+                    if (player.CurrentRoom == Exit)
+                    {
+                         player.OutputMessage("\n*** The player reached the exit.");
+                         counter++;
+                         if (counter == 5)
+                         {
+                              Exit.SetExit("shortcut", Entrance);
+                              Entrance.SetExit("shortcut", Exit);
+                         }
+                    }
+                    if (player.CurrentRoom == Entrance)
+                    {
+                         player.OutputMessage("\n*** The player came back to the entrance.");
+                    }
+                    WorldMod worldMod = null;
+                    worldMods.TryGetValue(player.CurrentRoom, out worldMod);
+                    if (worldMod != null)
+                    {
+                         worldMod.Execute();
+                         player.OutputMessage("\n%%% There is a change in the world. %%%\n");
+                    }
                }
           }
 
@@ -44,8 +72,20 @@ namespace StarterGame
                Player player = (Player)notification.Object;
                if (player != null)
                {
-                    player.OutputMessage($"The player is about to leave {player.CurrentRoom.Tag}");
+                    if (player.CurrentRoom == Entrance)
+                    {
+                         player.OutputMessage("\n>>> The player is leaving the entrance.");
+                    }
+                    if (player.CurrentRoom == Exit)
+                    {
+                         player.OutputMessage("\n>>> The player is going away from the exit.");
+                    }
                }
+          }
+
+          private void AddWorldMod(WorldMod worldMod)
+          {
+               worldMods[worldMod.Trigger] = worldMod;
           }
 
           private void CreateWorld()
@@ -60,6 +100,7 @@ namespace StarterGame
                Room universityHall = new Room("in University Hall");
                Room schuster = new Room("in the Schuster Center");
 
+               // Connect the Rooms
                outside.SetExit("west", boulevard);
 
                boulevard.SetExit("east", outside);
@@ -89,9 +130,45 @@ namespace StarterGame
 
                parkingDeck.SetExit("south", universityParking);
 
+               // Extra rooms
+               Room davidson = new Room("in the Davidson Center");
+               Room clockTower = new Room("at the Clock Tower");
+               Room greekCenter = new Room("at the Greek Center");
+               Room woodall = new Room("at Woodall Hall");
+
+               // Connect the Davidson to Clock Tower and others
+               davidson.SetExit("west", clockTower);
+
+               clockTower.SetExit("north", greekCenter);
+               clockTower.SetExit("south", woodall);
+               clockTower.SetExit("east", davidson);
+
+               greekCenter.SetExit("south", clockTower);
+
+               woodall.SetExit("north", clockTower);
+
+               // Setup connection
+               WorldMod worldMod = new WorldMod(parkingDeck, schuster, davidson, "east", "west");
+               AddWorldMod(worldMod);
+
+               // Create Lumpkin Center and Recreation Center
+               Room lumpkin = new Room("in the Lumpkin Center");
+               Room recreation = new Room("in the Recreation Center");
+
+               // Connect Lumpkin Center to Recreation Center
+               lumpkin.SetExit("west", recreation);
+               recreation.SetExit("east", lumpkin);
+
+               // Setup connection
+               worldMod = new WorldMod(scct, parkingDeck, lumpkin, "south", "north");
+               AddWorldMod(worldMod);
+
+               worldMod = new WorldMod(woodall, recreation, greekCenter, "east", "west");
+               AddWorldMod(worldMod);
+
                // assign special rooms
                _entrance = outside;
-               _exit = universityHall;
+               _exit = schuster;
           }
      }
 }
