@@ -40,6 +40,15 @@ namespace StarterGame
             }
         }
 
+        public void Say(string word)
+        {
+            OutputMessage("\nYou said " + word);
+            Dictionary<string, Object> userInfo = new Dictionary<string, Object>();
+            userInfo["word"] = word;
+            Notification notification = new Notification("PlayerDidSayWord", this, userInfo);
+            NotificationCenter.Instance.PostNotification(notification);
+        }
+
         public void OutputMessage(string message)
         {
             Console.WriteLine(message);

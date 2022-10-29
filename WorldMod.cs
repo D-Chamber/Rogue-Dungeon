@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StarterGame
 {
-     public class WorldMod
+     public class WorldMod : IWorldEvent
      {
           private Room _trigger;
           private Room _sideA;

@@ -27,7 +27,7 @@ namespace StarterGame
 
           private int counter;
 
-          private Dictionary<Room, WorldMod> worldMods = new Dictionary<Room, WorldMod>();
+          private Dictionary<Room, IWorldEvent> worldEvents = new Dictionary<Room, IWorldEvent>();
           // private WorldMod worldMod;
 
           private GameWorld()
@@ -53,16 +53,19 @@ namespace StarterGame
                               Entrance.SetExit("shortcut", Exit);
                          }
                     }
+
                     if (player.CurrentRoom == Entrance)
                     {
                          player.OutputMessage("\n*** The player came back to the entrance.");
                     }
-                    WorldMod worldMod = null;
-                    worldMods.TryGetValue(player.CurrentRoom, out worldMod);
-                    if (worldMod != null)
+
+                    IWorldEvent worldEvent = null;
+                    worldEvents.TryGetValue(player.CurrentRoom, out worldEvent);
+                    if (worldEvent != null)
                     {
-                         worldMod.Execute();
+                         worldEvent.Execute();
                          player.OutputMessage("\n%%% There is a change in the world. %%%\n");
+                         RemoveWorldEvent(worldEvent);
                     }
                }
           }
@@ -83,9 +86,14 @@ namespace StarterGame
                }
           }
 
-          private void AddWorldMod(WorldMod worldMod)
+          private void AddWorldEvent(IWorldEvent worldEvent)
           {
-               worldMods[worldMod.Trigger] = worldMod;
+               worldEvents[worldEvent.Trigger] = worldEvent;
+          }
+
+          private void RemoveWorldEvent(IWorldEvent worldEvent)
+          {
+               worldEvents.Remove(worldEvent.Trigger);
           }
 
           private void CreateWorld()
@@ -148,8 +156,8 @@ namespace StarterGame
                woodall.SetExit("north", clockTower);
 
                // Setup connection
-               WorldMod worldMod = new WorldMod(parkingDeck, schuster, davidson, "east", "west");
-               AddWorldMod(worldMod);
+               IWorldEvent worldMod = new WorldMod(parkingDeck, schuster, davidson, "east", "west");
+               AddWorldEvent(worldMod);
 
                // Create Lumpkin Center and Recreation Center
                Room lumpkin = new Room("in the Lumpkin Center");
@@ -161,10 +169,14 @@ namespace StarterGame
 
                // Setup connection
                worldMod = new WorldMod(scct, parkingDeck, lumpkin, "south", "north");
-               AddWorldMod(worldMod);
+               AddWorldEvent(worldMod);
 
                worldMod = new WorldMod(woodall, recreation, greekCenter, "east", "west");
-               AddWorldMod(worldMod);
+               AddWorldEvent(worldMod);
+
+               // Setup rooms with delegates
+               IRoomDelegate trapRoom = new TrapRoom();
+               scct.Delegate = trapRoom;
 
                // assign special rooms
                _entrance = outside;
