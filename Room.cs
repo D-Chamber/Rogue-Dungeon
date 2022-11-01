@@ -13,8 +13,17 @@ namespace StarterGame
 
     public class TrapRoom : IRoomDelegate
     {
-        public TrapRoom()
+        public string UnlockWord { get; set; }
+
+        public TrapRoom() : this("password")
         {
+            
+        }
+        
+        // desginated constructor
+        public TrapRoom(string unlockWord)
+        {
+            UnlockWord = unlockWord;
             NotificationCenter.Instance.AddObserver("PlayerDidSayWord", PlayerDidSayWord);
         }
         public Room GetExit(string exitName)
@@ -35,11 +44,60 @@ namespace StarterGame
             Player player = (Player)notification.Object;
             if(player != null)
             {
-                Dictionary<string, Object> userInfo = notification.UserInfo;
-                string word = (string)userInfo["word"];
-                player.OutputMessage("Did you say something" + word);
+                if (player.CurrentRoom.Delegate == this)
+                { 
+                    Dictionary<string, Object> userInfo = notification.UserInfo;
+                    string word = (string)userInfo["word"];
+                    player.OutputMessage("You said the right word"); 
+                    player.CurrentRoom.Delegate = null;
+                    NotificationCenter.Instance.RemoveObserver("PlayerDidSayWord", PlayerDidSayWord);
+                    player.OutputMessage("\n" + player.CurrentRoom.Description());
+                }
+                
+                
             }
         }
+    }
+
+    public class EchoRoom : IRoomDelegate
+    {
+        public EchoRoom()
+        {
+            NotificationCenter.Instance.AddObserver("PlayerDidSayWord", PlayerDidSayWord);
+        }
+        
+        public Room GetExit(string exitName)
+        {
+            return null;
+        }
+
+        public string GetExits()
+        {
+            return "Echo Room";
+        }
+
+        public string Description()
+        {
+            return "You are in an echo room.";
+        }
+        
+        public void PlayerDidSayWord(Notification notification)
+        {
+            Player player = (Player)notification.Object;
+            Dictionary<string, Object> userInfo = notification.UserInfo;
+            string word = (string)userInfo["word"];
+            if(player != null)
+            {
+                if (player.CurrentRoom.Delegate == this)
+                {
+                    if (word != null)
+                    {
+                        player.OutputMessage($"{word}...{word}...{word}...");
+                    }
+                }
+            }
+        }
+
     }
 
     public class Room

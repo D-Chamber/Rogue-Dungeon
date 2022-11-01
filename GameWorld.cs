@@ -178,6 +178,9 @@ namespace StarterGame
                IRoomDelegate trapRoom = new TrapRoom();
                scct.Delegate = trapRoom;
 
+               IRoomDelegate echoRoom = new EchoRoom();
+               parkingDeck.Delegate = echoRoom;
+
                // assign special rooms
                _entrance = outside;
                _exit = schuster;

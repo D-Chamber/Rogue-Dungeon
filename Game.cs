@@ -19,8 +19,8 @@ namespace StarterGame
         }
 
         /**
-     *  Main play routine.  Loops until end of play.
-     */
+        *  Main play routine.  Loops until end of play.
+        */
         public void Play()
         {
 
