@@ -6,6 +6,7 @@ namespace StarterGame
 {
     public interface IRoomDelegate
     {
+        Room ContainingRoom { set; get; }
         Room GetExit(string exitName);
         string GetExits();
         string Description();
@@ -14,6 +15,8 @@ namespace StarterGame
     public class TrapRoom : IRoomDelegate
     {
         public string UnlockWord { get; set; }
+        
+        public Room ContainingRoom { set; get; }
 
         public TrapRoom() : this("password")
         {
@@ -61,6 +64,7 @@ namespace StarterGame
 
     public class EchoRoom : IRoomDelegate
     {
+        public Room ContainingRoom { get; set; }
         public EchoRoom()
         {
             NotificationCenter.Instance.AddObserver("PlayerDidSayWord", PlayerDidSayWord);
@@ -68,17 +72,32 @@ namespace StarterGame
         
         public Room GetExit(string exitName)
         {
-            return null;
+            ContainingRoom.Delegate = null;
+            Room exit = ContainingRoom.GetExit(exitName);
+            ContainingRoom.Delegate = this;
+            return exit;
         }
 
         public string GetExits()
         {
-            return "Echo Room";
+            string exits = "";
+            if (ContainingRoom.Delegate != null)
+            {
+                ContainingRoom.Delegate = null;
+                exits += ContainingRoom.GetExits();
+                ContainingRoom.Delegate = this;
+            }
+            return exits;
         }
 
         public string Description()
         {
-            return "You are in an echo room.";
+            string description = "You are in an echo room.\n";
+            ContainingRoom.Delegate = null;
+            description += ContainingRoom.Description();
+            ContainingRoom.Delegate = this;
+
+            return description;
         }
         
         public void PlayerDidSayWord(Notification notification)
@@ -97,7 +116,6 @@ namespace StarterGame
                 }
             }
         }
-
     }
 
     public class Room
@@ -117,7 +135,18 @@ namespace StarterGame
         }
 
         private IRoomDelegate _roomDelegate;
-        public IRoomDelegate Delegate { get { return _roomDelegate; } set { _roomDelegate = value; } }
+        public IRoomDelegate Delegate 
+        { 
+            get { return _roomDelegate; } 
+            set 
+            {
+                _roomDelegate = value;
+                if (_roomDelegate != null)
+                {
+                    _roomDelegate.ContainingRoom = this;
+                }
+            } 
+        }
 
         public Room() : this("No Tag"){}
 

@@ -177,9 +177,11 @@ namespace StarterGame
                // Setup rooms with delegates
                IRoomDelegate trapRoom = new TrapRoom();
                scct.Delegate = trapRoom;
+               // trapRoom.ContainingRoom = scct;
 
                IRoomDelegate echoRoom = new EchoRoom();
                parkingDeck.Delegate = echoRoom;
+               // echoRoom.ContainingRoom = parkingDeck;
 
                // assign special rooms
                _entrance = outside;
