@@ -7,7 +7,7 @@ namespace StarterGame
     public interface IRoomDelegate
     {
         Room ContainingRoom { set; get; }
-        Room GetExit(string exitName);
+        Door GetExit(string exitName);
         string GetExits();
         string Description();
     }
@@ -29,7 +29,7 @@ namespace StarterGame
             UnlockWord = unlockWord;
             NotificationCenter.Instance.AddObserver("PlayerDidSayWord", PlayerDidSayWord);
         }
-        public Room GetExit(string exitName)
+        public Door GetExit(string exitName)
         {
             return null;
         }
@@ -70,10 +70,10 @@ namespace StarterGame
             NotificationCenter.Instance.AddObserver("PlayerDidSayWord", PlayerDidSayWord);
         }
         
-        public Room GetExit(string exitName)
+        public Door GetExit(string exitName)
         {
             ContainingRoom.Delegate = null;
-            Room exit = ContainingRoom.GetExit(exitName);
+            Door exit = ContainingRoom.GetExit(exitName);
             ContainingRoom.Delegate = this;
             return exit;
         }
@@ -120,7 +120,7 @@ namespace StarterGame
 
     public class Room
     {
-        private Dictionary<string, Room> _exits;
+        private Dictionary<string, Door> _exits;
         private string _tag;
         public string Tag
         {
@@ -154,27 +154,27 @@ namespace StarterGame
         public Room(string tag)
         {
             Delegate = null;
-            _exits = new Dictionary<string, Room>();
+            _exits = new Dictionary<string, Door>();
             this.Tag = tag;
         }
 
-        public void SetExit(string exitName, Room room)
+        public void SetExit(string exitName, Door door)
         {
-            _exits[exitName] = room;
+            _exits[exitName] = door;
         }
 
-        public Room GetExit(string exitName)
+        public Door GetExit(string exitName)
         {
-            Room room = null;
+            Door door = null;
             if(_roomDelegate != null)
             {
-                room = _roomDelegate.GetExit(exitName);
+                door = _roomDelegate.GetExit(exitName);
             }
             else
             {
-                _exits.TryGetValue(exitName, out room);
+                _exits.TryGetValue(exitName, out door);
             }
-            return room;
+            return door;
         }
 
         public string GetExits()
@@ -186,7 +186,7 @@ namespace StarterGame
             }
             else
             {
-                Dictionary<string, Room>.KeyCollection keys = _exits.Keys;
+                Dictionary<string, Door>.KeyCollection keys = _exits.Keys;
                 foreach (string exitName in keys)
                 {
                     exitNames += " " + exitName;

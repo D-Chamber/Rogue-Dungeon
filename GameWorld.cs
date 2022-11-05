@@ -49,8 +49,8 @@ namespace StarterGame
                          counter++;
                          if (counter == 5)
                          {
-                              Exit.SetExit("shortcut", Entrance);
-                              Entrance.SetExit("shortcut", Exit);
+                              // Exit.SetExit("shortcut", Entrance);
+                              // Entrance.SetExit("shortcut", Exit);
                          }
                     }
 
@@ -109,34 +109,49 @@ namespace StarterGame
                Room schuster = new Room("in the Schuster Center");
 
                // Connect the Rooms
-               outside.SetExit("west", boulevard);
+               // outside.SetExit("west", boulevard);
+               // boulevard.SetExit("east", outside);
+               
+               // Door door = new Door(boulevard, outside);
+               // boulevard.SetExit("east", door);
+               // outside.SetExit("west", door);
+               Door door = Door.CreateDoor(boulevard, outside, "east", "west");
+               
+               // boulevard.SetExit("south", scctparking);
+               // scctparking.SetExit("north", boulevard);
+               door = Door.CreateDoor(boulevard, scctparking, "north", "south");
 
-               boulevard.SetExit("east", outside);
-               boulevard.SetExit("south", scctparking);
-               boulevard.SetExit("west", theGreen);
-               boulevard.SetExit("north", universityParking);
+               // boulevard.SetExit("west", theGreen);
+               // theGreen.SetExit("east", boulevard);
+               door = Door.CreateDoor(boulevard, theGreen, "west", "east");
 
-               scctparking.SetExit("west", scct);
-               scctparking.SetExit("north", boulevard);
+               // boulevard.SetExit("north", universityParking);
+               // universityParking.SetExit("south", boulevard);
+               door = Door.CreateDoor(boulevard, universityHall, "south", "north");
+               
+               // scctparking.SetExit("west", scct);
+               // scct.SetExit("east", scctparking);
+               door = Door.CreateDoor(scctparking, scct, "east", "west");
 
-               scct.SetExit("east", scctparking);
-               scct.SetExit("north", schuster);
+               // scct.SetExit("north", schuster);
+               // schuster.SetExit("south", scct);
+               door = Door.CreateDoor(scct, schuster, "south", "north");
 
-               schuster.SetExit("south", scct);
-               schuster.SetExit("north", universityHall);
-               schuster.SetExit("east", theGreen);
+               // schuster.SetExit("north", universityHall);
+               // universityHall.SetExit("south", schuster);
+               door = Door.CreateDoor(schuster, universityHall, "south", "north");
 
-               theGreen.SetExit("west", schuster);
-               theGreen.SetExit("east", boulevard);
+               // schuster.SetExit("east", theGreen);
+               // theGreen.SetExit("west", schuster);
+               door = Door.CreateDoor(schuster, theGreen, "west", "east");
 
-               universityHall.SetExit("south", schuster);
-               universityHall.SetExit("east", universityParking);
+               // universityHall.SetExit("east", universityParking);
+               // universityParking.SetExit("west", universityHall);
+               door = Door.CreateDoor(universityHall, universityParking, "west", "east");
 
-               universityParking.SetExit("south", boulevard);
-               universityParking.SetExit("west", universityHall);
-               universityParking.SetExit("north", parkingDeck);
-
-               parkingDeck.SetExit("south", universityParking);
+               // universityParking.SetExit("north", parkingDeck);
+               // parkingDeck.SetExit("south", universityParking);
+               door = Door.CreateDoor(universityParking, parkingDeck, "south", "north");
 
                // Extra rooms
                Room davidson = new Room("in the Davidson Center");
@@ -145,15 +160,17 @@ namespace StarterGame
                Room woodall = new Room("at Woodall Hall");
 
                // Connect the Davidson to Clock Tower and others
-               davidson.SetExit("west", clockTower);
+               // davidson.SetExit("west", clockTower);
+               // clockTower.SetExit("east", davidson);
+               door = Door.CreateDoor(davidson, clockTower, "east", "west");
+               
+               // clockTower.SetExit("north", greekCenter);
+               // greekCenter.SetExit("south", clockTower);
+               door = Door.CreateDoor(clockTower, greekCenter, "south", "north");
 
-               clockTower.SetExit("north", greekCenter);
-               clockTower.SetExit("south", woodall);
-               clockTower.SetExit("east", davidson);
-
-               greekCenter.SetExit("south", clockTower);
-
-               woodall.SetExit("north", clockTower);
+               // clockTower.SetExit("south", woodall);
+               // woodall.SetExit("north", clockTower);
+               door = Door.CreateDoor(clockTower, woodall, "north", "south");
 
                // Setup connection
                IWorldEvent worldMod = new WorldMod(parkingDeck, schuster, davidson, "east", "west");
@@ -164,8 +181,9 @@ namespace StarterGame
                Room recreation = new Room("in the Recreation Center");
 
                // Connect Lumpkin Center to Recreation Center
-               lumpkin.SetExit("west", recreation);
-               recreation.SetExit("east", lumpkin);
+               // lumpkin.SetExit("west", recreation);
+               // recreation.SetExit("east", lumpkin);
+               door = Door.CreateDoor(lumpkin, recreation, "east", "west");
 
                // Setup connection
                worldMod = new WorldMod(scct, parkingDeck, lumpkin, "south", "north");

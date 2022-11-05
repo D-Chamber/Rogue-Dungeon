@@ -26,9 +26,10 @@ namespace StarterGame
 
         public void WaltTo(string direction)
         {
-            Room nextRoom = this.CurrentRoom.GetExit(direction);
-            if (nextRoom != null)
+            Door door = this.CurrentRoom.GetExit(direction);
+            if (door != null)
             {
+                Room nextRoom = door.RoomOnTheOtherSideOf(CurrentRoom);
                 NotificationCenter.Instance.PostNotification(new Notification("PlayerWillEnterRoom", this));
                 this.CurrentRoom = nextRoom;
                 NotificationCenter.Instance.PostNotification(new Notification("PlayerDidEnterRoom", this));

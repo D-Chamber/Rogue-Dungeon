@@ -25,8 +25,9 @@ namespace StarterGame
 
           public void Execute()
           {
-               _sideA.SetExit(_toSideB, _sideB);
-               _sideB.SetExit(_toSideA, _sideA);
+               // _sideA.SetExit(_toSideB, _sideB);
+               // _sideB.SetExit(_toSideA, _sideA);
+               Door door = Door.CreateDoor(_sideA, _sideB, _toSideA, _toSideB);
           }
      }
 }
