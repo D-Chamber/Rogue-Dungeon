@@ -1,14 +1,26 @@
+using System.ComponentModel.Design.Serialization;
+
 namespace StarterGame;
 
-public class Door
+public class Door : IClosable
 {
     private Room _roomA;
     private Room _roomB;
+    private bool _closed;
+    private ILockable _lock;
+    
+    public ILockable TheLock
+    {
+        get { return _lock; }
+        set => _lock = value;
+    }
 
-    public Door(Room roomA, Room roomB)
+    private Door(Room roomA, Room roomB)
     {
         _roomA = roomA;
         _roomB = roomB;
+        _closed = false;
+        TheLock = null;
     }
 
     public Room RoomOnTheOtherSideOf (Room room)
@@ -26,12 +38,60 @@ public class Door
 
         return theOtherRoom;
     }
-
-    public static Door CreateDoor(Room roomA, Room roomB, string toRoomA, string toRoomB)
+    
+    public bool IsOpen
     {
-        Door door = new Door(roomA, roomB);
-        roomA.SetExit(toRoomA, door);
-        roomB.SetExit(toRoomB, door);
+        get { return !_closed; }
+    }
+    public bool IsClosed
+    {
+        get { return _closed; }
+    }
+
+    public bool Open()
+    {
+        bool result = false;
+        if (TheLock != null)
+        {
+            if (TheLock.CanOpen)
+            {
+                _closed = false;
+                result = true;
+            }
+        }
+        else
+        {
+            _closed = false;
+            result = true;
+        }
+        return result;
+    }
+
+    public bool Close()
+    {
+        bool result = false;
+        if (TheLock != null)
+        {
+            if (TheLock.CanClose)
+            {
+                _closed = true;
+                result = true;
+            }
+        }
+        else
+        {
+            _closed = true;
+            result = true;
+        }
+        _closed = true;
+        return result;
+    }
+
+    public static Door CreateDoor(Room roomA, Room roomB, string toRoomB, string toRoomA)
+    {
+        var door = new Door(roomA, roomB);
+        roomA.SetExit(toRoomB, door);
+        roomB.SetExit(toRoomA, door);
 
         return door;
     }

@@ -14,11 +14,11 @@ namespace StarterGame
 
           public Room Trigger { get { return _trigger; } }
 
-          public WorldMod(Room trigger, Room sideA, Room SideB, string toSideA, string toSideB)
+          public WorldMod(Room trigger, Room sideA, Room sideB, string toSideA, string toSideB)
           {
                _trigger = trigger;
                _sideA = sideA;
-               _sideB = SideB;
+               _sideB = sideB;
                _toSideA = toSideA;
                _toSideB = toSideB;
           }
@@ -27,7 +27,8 @@ namespace StarterGame
           {
                // _sideA.SetExit(_toSideB, _sideB);
                // _sideB.SetExit(_toSideA, _sideA);
-               Door door = Door.CreateDoor(_sideA, _sideB, _toSideA, _toSideB);
+               var door = Door.CreateDoor(_sideA, _sideB, _toSideA, _toSideB);
+               door.Close();
           }
      }
 }
