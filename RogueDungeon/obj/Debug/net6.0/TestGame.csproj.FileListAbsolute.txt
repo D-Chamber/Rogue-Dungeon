@@ -1,0 +1,17 @@
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/TestGame
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/TestGame.deps.json
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/TestGame.runtimeconfig.json
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/TestGame.dll
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/TestGame.pdb
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.csproj.AssemblyReference.cache
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.GeneratedMSBuildEditorConfig.editorconfig
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.AssemblyInfoInputs.cache
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.AssemblyInfo.cs
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.csproj.CoreCompileInputs.cache
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.dll
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/refint/TestGame.dll
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.pdb
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.genruntimeconfig.cache
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/ref/TestGame.dll
+/Users/chamber/RiderProjects/TestGame/TestGame/bin/Debug/net6.0/Pastel.dll
+/Users/chamber/RiderProjects/TestGame/TestGame/obj/Debug/net6.0/TestGame.csproj.CopyComplete

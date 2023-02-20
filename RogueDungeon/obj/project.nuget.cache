@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dAzUlQaakTeRl6yMSjZdXHweIK1oK50t/1NmLQjjwN3KZXQg+MfmA7+WNlHRRm01mhYz6qCi4SlqQbdrW9vdkQ==",
+  "success": true,
+  "projectFilePath": "/Users/chamber/RiderProjects/RogueDungeon/RogueDungeon/RogueDungeon.csproj",
+  "expectedPackageFiles": [
+    "/Users/chamber/.nuget/packages/pastel/3.0.1/pastel.3.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
